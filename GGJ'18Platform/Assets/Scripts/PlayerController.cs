@@ -1,9 +1,21 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-    
+
+    [Header("UI Elements")]
+    public GameObject timeholder;
+    public GameObject hintholder;
+    public GameObject winPanel;
+    public GameObject losePanel;
+
+    public GameObject endPoint;
+
+    private Text timeText;
+    private Text hintText;
+    private float timeleft = 121;
     private Rigidbody2D rb2d;
     private Vector2 velocity;
     Camera mainCam;
@@ -15,10 +27,21 @@ public class PlayerController : MonoBehaviour {
         mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         rb2d = GetComponent<Rigidbody2D>();
         StartCoroutine("TurnOffCam");
-	}
+        timeText = timeholder.GetComponent<Text>();
+        hintText = hintholder.GetComponent<Text>();
+        Debug.Log(transform);
+        Time.timeScale = 1f;
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        hintText.text = (hintCount^1).ToString();
+        timeleft -= Time.deltaTime;
+        timeText.text = ((int)timeleft).ToString();
+        if((int)timeleft == 0)
+        {
+            GameOver();
+        }
         velocity.x = 0;
         velocity.y = 0;
         Movement();
@@ -71,11 +94,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void GameOver()
+    {
+        Time.timeScale = 0f;
+        losePanel.SetActive(true);
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("EndPoint"))
         {
-            SceneManager.LoadScene("StartMenu");
+            Time.timeScale = 0f;
+            winPanel.SetActive(true);
         }
     }
 

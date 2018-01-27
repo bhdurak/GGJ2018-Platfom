@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/StartMenu.unity
+    path: Assets/Scenes/StartMenu.unity
     guid: b4fe759b50113154083d82692bce58f9
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 7aab3c1e29ad4de40b9414452d95fb1c
+  - enabled: 1
+    path: Assets/Scenes/AudioTestScene.unity
+    guid: ed3cc270ba0c94245b28edc84a9c5860
