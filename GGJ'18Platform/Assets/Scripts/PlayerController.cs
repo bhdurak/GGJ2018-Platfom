@@ -1,21 +1,32 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
-
-    private float speed = 10;
+    
     private Rigidbody2D rb2d;
     private Vector2 velocity;
-
+    Camera mainCam;
+    Color myBlue = new Color32(0x31, 0x4D, 0x79, 0x00);
+    private int hintCount = 0;
 
 	// Use this for initialization
 	void Start () {
+        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         rb2d = GetComponent<Rigidbody2D>();
-        //velocity.z = 0;
+        StartCoroutine("TurnOffCam");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        velocity.x = 0;
+        velocity.y = 0;
         Movement();
+        if(hintCount < 1)
+        {
+            Hint();
+        }
+        
 	}
 
     void Movement ()
@@ -23,30 +34,40 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("up"))
         {
             //transform.Translate(0, speed * Time.deltaTime, 0);
-            velocity.x = 0;
-            velocity.y = 10;
+            //velocity.x = 0;
+            velocity.y = 15;
             rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
         }
         if (Input.GetKey("down"))
         {
             //transform.Translate(0, -1 * speed * Time.deltaTime, 0);
-            velocity.x = 0;
-            velocity.y = -10;
+            //velocity.x = 0;
+            velocity.y = -15;
             rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
         }
         if (Input.GetKey("left"))
         {
             //transform.Translate(-1 * speed * Time.deltaTime, 0, 0);
-            velocity.x = -10;
-            velocity.y = 0;
+            velocity.x = -15;
+            //velocity.y = 0;
             rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
         }
         if (Input.GetKey("right"))
         {
             //transform.Translate(speed * Time.deltaTime, 0, 0);
-            velocity.x = 10;
-            velocity.y = 0;
+            velocity.x = 15;
+            //velocity.y = 0;
             rb2d.MovePosition(rb2d.position + velocity * Time.deltaTime);
+        }
+    }
+
+    void Hint()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            hintCount++;
+            Debug.Log("H");
+            StartCoroutine(TurnOnCam());
         }
     }
 
@@ -54,15 +75,22 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("EndPoint"))
         {
-            Debug.Log("a");
+            SceneManager.LoadScene("StartMenu");
         }
     }
 
-    /*private void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator TurnOffCam()
     {
-        if (collision.gameObject.CompareTag("EndPoint"))
-        {
-            Debug.Log("b");
-        }
-    }*/
+        Debug.Log("TurnOff");
+        yield return new WaitForSeconds(0.7f);
+        mainCam.backgroundColor = Color.black;
+    }
+
+    IEnumerator TurnOnCam()
+    {
+        Debug.Log("TurnOn");
+        mainCam.backgroundColor = myBlue;
+        yield return new WaitForSeconds(0.7f);
+        mainCam.backgroundColor = Color.black;
+    }
 }
