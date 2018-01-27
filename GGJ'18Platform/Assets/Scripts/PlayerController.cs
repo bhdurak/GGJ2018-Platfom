@@ -18,19 +18,22 @@ public class PlayerController : MonoBehaviour {
     private float timeleft = 121;
     private Rigidbody2D rb2d;
     private Vector2 velocity;
-    Camera mainCam;
+    public Camera mainCam;
+    public Camera blackCam;
     Color myBlue = new Color32(0x31, 0x4D, 0x79, 0x00);
     private int hintCount = 0;
 
 	// Use this for initialization
 	void Start () {
-        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        //mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         rb2d = GetComponent<Rigidbody2D>();
-        StartCoroutine("TurnOffCam");
         timeText = timeholder.GetComponent<Text>();
         hintText = hintholder.GetComponent<Text>();
         Debug.Log(transform);
         Time.timeScale = 1f;
+        blackCam.enabled = false;
+        mainCam.enabled = true;
+        StartCoroutine("TurnOffCam");
     }
 	
 	// Update is called once per frame
@@ -114,14 +117,21 @@ public class PlayerController : MonoBehaviour {
     {
         Debug.Log("TurnOff");
         yield return new WaitForSeconds(0.7f);
-        mainCam.backgroundColor = Color.black;
+        mainCam.enabled = false;
+        blackCam.enabled = true;
     }
 
     IEnumerator TurnOnCam()
     {
         Debug.Log("TurnOn");
-        mainCam.backgroundColor = myBlue;
-        yield return new WaitForSeconds(0.7f);
-        mainCam.backgroundColor = Color.black;
+        //mainCam.backgroundColor = myBlue;
+        //mainCam.orthographicSize = 17;
+        blackCam.enabled = false;
+        mainCam.enabled = true;
+        yield return new WaitForSeconds(0.9f);
+        //mainCam.backgroundColor = Color.black;
+        //mainCam.orthographicSize = 0;
+        mainCam.enabled = false;
+        blackCam.enabled = true;
     }
 }
