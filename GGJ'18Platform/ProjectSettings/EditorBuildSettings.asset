@@ -14,3 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AudioTestScene.unity
     guid: ed3cc270ba0c94245b28edc84a9c5860
+  - enabled: 1
+    path: Assets/Scenes/Level_2.unity
+    guid: 8c973f39b5bb8554f9450217b1535d94
+  - enabled: 1
+    path: Assets/Scenes/Level_3.unity
+    guid: 03d7c7acc53433d41a1fe46598548b8d
+  - enabled: 1
+    path: Assets/Scenes/Level_4.unity
+    guid: 79c9fb5beee3b204f9079cd07e2b8cf8
+  - enabled: 1
+    path: Assets/Scenes/Level_5.unity
+    guid: 2afcb85f601bec94f93d566636b8599d

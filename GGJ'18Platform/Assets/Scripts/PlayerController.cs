@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject hintholder;
     public GameObject winPanel;
     public GameObject losePanel;
+    public GameObject textT;
+    public GameObject textH;
 
     public GameObject endPoint;
 
@@ -38,9 +40,21 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        hintText.text = (hintCount^1).ToString();
-        timeleft -= Time.deltaTime;
-        timeText.text = ((int)timeleft).ToString();
+        if (Time.timeScale != 0)
+        {
+            hintText.text = (hintCount ^ 1).ToString();
+            timeleft -= Time.deltaTime;
+            timeText.text = ((int)timeleft).ToString();
+        }
+
+        else
+        {
+            hintText.text = " ";
+            timeText.text = " ";
+            textT.GetComponent<Text>().text = " ";
+            textH.GetComponent<Text>().text = " ";
+        }
+        
         if((int)timeleft == 0)
         {
             GameOver();
